@@ -15,6 +15,24 @@ const configSchema = z
      */
     authors: z.record(blogAuthorSchema).default({}),
     /**
+     * Map of component overrides for the Starlight Blog.
+     */
+    components: z
+      .object({
+        Author: z.string().optional(),
+        Cover: z.string().optional(),
+        Excerpt: z.string().optional(),
+        ExcerptContent: z.string().optional(),
+        Metadata: z.string().optional(),
+        Page: z.string().optional(),
+        PostCount: z.string().optional(),
+        PostTags: z.string().optional(),
+        Posts: z.string().optional(),
+        Preview: z.string().optional(),
+        PrevNextLinks: z.string().optional(),
+      })
+      .optional(),
+    /**
      * The configuration of various metrics that can be displayed alongside blog posts.
      */
     metrics: z

@@ -14,6 +14,7 @@ export function vitePluginStarlightBlogConfig(
     'virtual:starlight-blog-config': `export default ${JSON.stringify(starlightBlogConfig)}`,
     'virtual:starlight-blog-context': `export default ${JSON.stringify(context)}`,
     'virtual:starlight-blog-images': getImagesVirtualModule(starlightBlogConfig, context),
+    'virtual:starlight-blog-components': getComponentsVirtualModule(starlightBlogConfig, context),
   }
 
   const moduleResolutionMap = Object.fromEntries(
@@ -47,6 +48,35 @@ export function getImagesVirtualModule(starlightBlogConfig: StarlightBlogConfig,
     module += `  "${author.name}": ${author.picture.startsWith('.') ? id : resolveModuleId(author.picture, context)},\n`
   }
   module += '};\n'
+
+  return module
+}
+
+function getComponentsVirtualModule(starlightBlogConfig: StarlightBlogConfig, context: StarlightBlogContext) {
+  let module = ''
+
+  const components = [
+    'Author',
+    'Cover',
+    'Excerpt',
+    'ExcerptContent',
+    'Metadata',
+    'Page',
+    'PostCount',
+    'PostTags',
+    'Posts',
+    'Preview',
+    'PrevNextLinks',
+  ] as const
+
+  for (const component of components) {
+    const override = starlightBlogConfig.components?.[component]
+    const path = override
+      ? resolveModuleId(override, context)
+      : JSON.stringify(`starlight-blog/components/${component}.astro`)
+
+    module += `export { default as ${component} } from ${path};\n`
+  }
 
   return module
 }

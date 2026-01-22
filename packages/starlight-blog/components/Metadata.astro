@@ -7,8 +7,7 @@ import { renderBlogEntryToString } from '../libs/container'
 import type { StarlightBlogEntry } from '../libs/content'
 import type { Locale } from '../libs/i18n'
 import { getMetrics, type Metrics } from '../libs/metrics'
-
-import Author from './Author.astro'
+import { Author } from 'virtual:starlight-blog-components'
 
 interface Props {
   entry: StarlightBlogEntry
