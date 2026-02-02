@@ -1,5 +1,7 @@
 /// <reference path="./locals.d.ts" />
 
+import { fileURLToPath } from 'node:url'
+
 import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroIntegrationLogger } from 'astro'
 
@@ -7,7 +9,7 @@ import { type StarlightBlogConfig, validateConfig, type StarlightBlogUserConfig 
 import { isNavigationWithCustomCss, isNavigationOverride } from './libs/navigation'
 import { stripLeadingSlash, stripTrailingSlash } from './libs/path'
 import { remarkStarlightBlog } from './libs/remark'
-import { vitePluginStarlightBlogConfig } from './libs/vite'
+import { vitePluginStarlightBlogComponents, vitePluginStarlightBlogConfig } from './libs/vite'
 import { Translations } from './translations'
 
 export type { StarlightBlogConfig, StarlightBlogUserConfig }
@@ -116,6 +118,7 @@ export default function starlightBlogPlugin(userConfig?: StarlightBlogUserConfig
                       titleDelimiter: starlightConfig.titleDelimiter,
                       trailingSlash: astroConfig.trailingSlash,
                     }),
+                    vitePluginStarlightBlogComponents(config.components, fileURLToPath(astroConfig.root)),
                   ],
                 },
               })

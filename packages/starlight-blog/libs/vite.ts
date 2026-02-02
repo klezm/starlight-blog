@@ -1,4 +1,5 @@
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import type { StarlightUserConfig } from '@astrojs/starlight/types'
 import type { AstroConfig, ViteUserConfig } from 'astro'
@@ -49,6 +50,38 @@ export function getImagesVirtualModule(starlightBlogConfig: StarlightBlogConfig,
   module += '};\n'
 
   return module
+}
+
+export function vitePluginStarlightBlogComponents(overrides: Record<string, string>, rootDir: string): VitePlugin {
+  const virtualModuleId = 'virtual:starlight-blog/components'
+  const resolvedVirtualModuleId = `\0${virtualModuleId}`
+
+  return {
+    name: 'vite-plugin-starlight-blog-components',
+    load(id) {
+      if (id.startsWith(resolvedVirtualModuleId)) {
+        const componentName = id.replace(`${resolvedVirtualModuleId}/`, '')
+
+        if (overrides[componentName]) {
+          const resolvedPath = overrides[componentName].startsWith('.')
+            ? path.resolve(rootDir, overrides[componentName])
+            : overrides[componentName]
+          return `export { default } from ${JSON.stringify(resolvedPath)};`
+        }
+
+        const defaultPath = path.resolve(
+          path.dirname(fileURLToPath(import.meta.url)),
+          `../components/${componentName}.astro`,
+        )
+        return `export { default } from ${JSON.stringify(defaultPath)};`
+      }
+    },
+    resolveId(id) {
+      if (id.startsWith(virtualModuleId)) {
+        return `\0${id}`
+      }
+    },
+  }
 }
 
 function resolveModuleId(id: string, context: StarlightBlogContext) {
