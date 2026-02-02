@@ -1,9 +1,7 @@
 ---
 import type { InferGetStaticPropsType } from 'astro'
 
-import Page from '../components/Page.astro'
-import Posts from '../components/Posts.astro'
-import PrevNextLinks from '../components/PrevNextLinks.astro'
+import { Page, Posts, PrevNextLinks } from 'virtual:starlight-blog-components'
 import { getBlogStaticPaths } from '../libs/content'
 import { getPageProps } from '../libs/page'
 import { getBlogTitle } from '../libs/title'
