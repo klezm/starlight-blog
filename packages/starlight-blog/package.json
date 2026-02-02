@@ -22,6 +22,7 @@
     "./components/SiteTitle.astro": "./components/starlight/SiteTitle.astro",
     "./components/ThemeSelect.astro": "./components/starlight/ThemeSelect.astro",
     "./data": "./data.ts",
+    "./libs": "./libs/index.ts",
     "./middleware": "./middleware.ts",
     "./overrides/MarkdownContent.astro": "./overrides/MarkdownContent.astro",
     "./overrides/SiteTitle.astro": "./overrides/SiteTitle.astro",
