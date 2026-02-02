@@ -15,3 +15,8 @@ declare module 'virtual:starlight-blog-images' {
 
   export const authors: Record<string, string | ImageMetadata>
 }
+
+declare module 'virtual:starlight-blog/components/*' {
+  const Component: any
+  export default Component
+}
