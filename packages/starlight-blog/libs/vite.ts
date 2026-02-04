@@ -33,12 +33,28 @@ export function vitePluginStarlightBlogConfig(
 
       return undefined
     },
-    resolveId(id) {
+    resolveId(id, importer) {
       if (id in modules) return resolveVirtualModuleId(id)
 
       if (id.startsWith('virtual:starlight-blog/components/')) {
         return resolveVirtualModuleId(id)
       }
+
+      if (id.startsWith('starlight-blog/components/')) {
+        const componentName = id.replace('starlight-blog/components/', '').replace(/\.astro$/, '')
+
+        if (starlightBlogConfig.components[componentName]) {
+          const overridePath = starlightBlogConfig.components[componentName]
+          const resolvedOverridePath = path.resolve(context.rootDir, overridePath)
+
+          if (importer === resolvedOverridePath) {
+            return undefined
+          }
+
+          return resolveVirtualModuleId(`virtual:starlight-blog/components/${componentName}`)
+        }
+      }
+
       return undefined
     },
   }
