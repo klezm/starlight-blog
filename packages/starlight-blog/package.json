@@ -8,6 +8,7 @@
   "exports": {
     ".": "./index.ts",
     "./components/*.astro": "./components/*.astro",
+    "./components/*": "./components/*.astro",
     "./components/MarkdownContent.astro": "./components/starlight/MarkdownContent.astro",
     "./components/SiteTitle.astro": "./components/starlight/SiteTitle.astro",
     "./components/ThemeSelect.astro": "./components/starlight/ThemeSelect.astro",
