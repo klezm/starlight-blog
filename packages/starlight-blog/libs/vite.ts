@@ -36,10 +36,6 @@ export function vitePluginStarlightBlogConfig(
     resolveId(id, importer) {
       if (id in modules) return resolveVirtualModuleId(id)
 
-      if (id.startsWith('virtual:starlight-blog/components/')) {
-        return resolveVirtualModuleId(id)
-      }
-
       if (id.startsWith('starlight-blog/components/')) {
         const componentName = id.replace('starlight-blog/components/', '').replace(/\.astro$/, '')
 
